@@ -4,8 +4,12 @@
 #
 # Note: move log class inspired by Eddie Sharick
 #
+import logging
+
 from Piece import Rook, Knight, Bishop, Queen, King, Pawn
 from enums import Player
+import logging.config
+logging.config.fileConfig('log.config')
 
 '''
 r \ c     0           1           2           3           4           5           6           7 
@@ -18,7 +22,6 @@ r \ c     0           1           2           3           4           5         
 6   [(r=6, c=0), (r=6, c=1), (r=6, c=2), (r=6, c=3), (r=6, c=4), (r=6, c=5), (r=6, c=6), (r=6, c=7)]
 7   [(r=7, c=0), (r=7, c=1), (r=7, c=2), (r=7, c=3), (r=7, c=4), (r=7, c=5), (r=7, c=6), (r=7, c=7)]
 '''
-
 
 # TODO: Flip the board according to the player
 # TODO: Pawns are usually indicated by no letters
@@ -552,6 +555,7 @@ class game_state:
             return undoing_move
         else:
             print("Back to the beginning!")
+
 
     # true if white, false if black
     def whose_turn(self):
