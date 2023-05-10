@@ -1,1 +1,5 @@
 pygame~=2.0.0.dev8
+pip~=23.1
+setuptools~=65.5.0
+packaging~=23.1
+pytest~=7.3.1

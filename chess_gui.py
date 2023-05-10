@@ -11,6 +11,9 @@ import pygame as py
 import ai_engine
 from enums import Player
 
+import logging.config
+logging.config.fileConfig('log.config')
+
 """Variables"""
 WIDTH = HEIGHT = 512  # width and height of the chess board
 DIMENSION = 8  # the dimensions of the chess board
@@ -18,6 +21,7 @@ SQ_SIZE = HEIGHT // DIMENSION  # the size of each of the squares in the board
 MAX_FPS = 15  # FPS for animations
 IMAGES = {}  # images for the chess pieces
 colors = [py.Color("white"), py.Color("gray")]
+
 
 # TODO: AI black has been worked on. Mirror progress for other two modes
 def load_images():
@@ -86,6 +90,8 @@ def highlight_square(screen, game_state, valid_moves, square_selected):
 
 
 def main():
+    logging.info("new game begins")
+
     # Check for the number of players and the color of the AI
     human_player = ""
     while True:
@@ -108,6 +114,10 @@ def main():
         except ValueError:
             print("Enter 1 or 2.")
 
+    logging.info("number of players: %s", str(number_of_players))
+    if number_of_players == 1:
+        logging.info("human player color: %s", str(human_player))
+
     py.init()
     screen = py.display.set_mode((WIDTH, HEIGHT))
     clock = py.time.Clock()
@@ -122,8 +132,11 @@ def main():
     ai = ai_engine.chess_ai()
     game_state = chess_engine.game_state()
     if human_player is 'b':
+        logging.debug("started playing: ai")
         ai_move = ai.minimax_black(game_state, 3, -100000, 100000, True, Player.PLAYER_1)
         game_state.move_piece(ai_move[0], ai_move[1], True)
+    else:
+        logging.debug("started playing: human")
 
     while running:
         for e in py.event.get():
@@ -180,11 +193,14 @@ def main():
         endgame = game_state.checkmate_stalemate_checker()
         if endgame == 0:
             game_over = True
+            logging.debug("result: winner is b.\n")
             draw_text(screen, "Black wins.")
         elif endgame == 1:
+            logging.debug("result: winner is w.\n")
             game_over = True
             draw_text(screen, "White wins.")
         elif endgame == 2:
+            logging.debug("result: stalemate.\n")
             game_over = True
             draw_text(screen, "Stalemate.")
 
