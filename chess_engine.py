@@ -46,8 +46,7 @@ class game_state:
         self._white_king_location = [0, 3]
         self._black_king_location = [7, 3]
 
-        self.white_king_can_castle = [True, True,
-                                      True]  # Has king not moved, has Rook1(col=0) not moved, has Rook2(col=7) not moved
+        self.white_king_can_castle = [True, True, True]  # Has king not moved, has Rook1(col=0) not moved, has Rook2(col=7) not moved
         self.black_king_can_castle = [True, True, True]
 
         # Initialize White pieces
